@@ -54,7 +54,7 @@ public class Case02 {
 	@DisplayName("テスト02 DBに登録されていないユーザーでログイン")
 	void test02() {
 		//DBに登録されていないログインIDとパスワードを入力
-		webDriver.findElement(By.name("loginId")).sendKeys("not_exist_user");
+		webDriver.findElement(By.name("loginId")).sendKeys("Student");
 		webDriver.findElement(By.name("password")).sendKeys("ItTest2025");
 
 		//ログインボタンの押下

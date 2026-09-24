@@ -63,6 +63,9 @@ public class Case02 {
 		//タイトルの変更がなく、画面遷移が行われていないかの確認
 		assertEquals("ログイン | LMS", webDriver.getTitle());
 
+		//エラーメッセージが表示されているかの確認
+		assertEquals("* ログインに失敗しました。", webDriver.findElement(By.className("help-inline")).getText());
+
 		//エビデンスの取得
 		getEvidence(new Object() {
 		});

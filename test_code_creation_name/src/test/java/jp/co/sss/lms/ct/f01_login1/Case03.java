@@ -77,6 +77,7 @@ public class Case03 {
 		//エビデンスの取得
 		getEvidence(new Object() {
 		});
+
 	}
 
 }

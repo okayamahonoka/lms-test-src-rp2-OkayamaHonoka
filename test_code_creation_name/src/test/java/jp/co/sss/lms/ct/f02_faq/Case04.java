@@ -110,7 +110,32 @@ public class Case04 {
 	@Order(4)
 	@DisplayName("テスト04 「よくある質問」リンクからよくある質問画面を別タブに開く")
 	void test04() {
-		// TODO ここに追加
+		//現在のウィンドウのIDを取得
+		String currentHandle = webDriver.getWindowHandle();
+
+		//「よくある質問」リンクの押下
+		webDriver.findElement(By.partialLinkText("よくある質問")).click();
+
+		//新しく開いたタブに操作対象を切り替える
+		for (String handle : webDriver.getWindowHandles()) {
+			if (!handle.equals(currentHandle)) {
+				webDriver.switchTo().window(handle);
+				break;
+			}
+		}
+
+		//ページ遷移の待機
+		org.openqa.selenium.support.ui.WebDriverWait wait = new org.openqa.selenium.support.ui.WebDriverWait(webDriver,
+				java.time.Duration.ofSeconds(10));
+		wait.until(org.openqa.selenium.support.ui.ExpectedConditions.titleIs("よくある質問 | LMS"));
+
+		//画面遷移後のタイトルの確認
+		assertEquals("よくある質問 | LMS", webDriver.getTitle());
+
+		//エビデンスの取得
+		getEvidence(new Object() {
+		});
+
 	}
 
 }

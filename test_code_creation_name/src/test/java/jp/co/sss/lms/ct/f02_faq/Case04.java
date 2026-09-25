@@ -82,12 +82,19 @@ public class Case04 {
 	@Order(3)
 	@DisplayName("テスト03 上部メニューの「ヘルプ」リンクからヘルプ画面に遷移")
 	void test03() {
-		//上部メニューの「ヘルプ」リンクを押下
-		webDriver.findElement(By.linkText("ヘルプ")).click();
 
-		//ページ遷移を待機する
 		org.openqa.selenium.support.ui.WebDriverWait wait = new org.openqa.selenium.support.ui.WebDriverWait(webDriver,
 				java.time.Duration.ofSeconds(10));
+
+		//「機能」を押下し、プルダウンメニューを開く
+		wait.until(org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable(By.partialLinkText("機能")))
+				.click();
+
+		//プルダウン内の「ヘルプ」リンクを押下
+		wait.until(org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable(By.partialLinkText("ヘルプ")))
+				.click();
+
+		//ページ遷移を待機する
 		wait.until(org.openqa.selenium.support.ui.ExpectedConditions.titleIs("ヘルプ | LMS"));
 
 		//画面遷移後のタイトルの確認

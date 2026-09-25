@@ -36,7 +36,8 @@ public class Case04 {
 	@Test
 	@Order(1)
 	@DisplayName("テスト01 トップページURLでアクセス")
-	void test01() {//指定のURLに遷移する
+	void test01() {
+		//指定のURLに遷移する
 		goTo("http://localhost:8080/lms");
 
 		//画面遷移が行われたかどうかの確認
@@ -82,7 +83,6 @@ public class Case04 {
 	@Order(3)
 	@DisplayName("テスト03 上部メニューの「ヘルプ」リンクからヘルプ画面に遷移")
 	void test03() {
-
 		org.openqa.selenium.support.ui.WebDriverWait wait = new org.openqa.selenium.support.ui.WebDriverWait(webDriver,
 				java.time.Duration.ofSeconds(10));
 

@@ -58,7 +58,7 @@ public class Case03 {
 		loginIdInput.clear();
 		loginIdInput.sendKeys("StudentAA01");
 
-		//入力項目のクリアと各項目の入力(ログインID)
+		//入力項目のクリアと各項目の入力(パスワード)
 		var passwordInput = webDriver.findElement(By.name("password"));
 		passwordInput.clear();
 		passwordInput.sendKeys("Studenta01");
@@ -66,7 +66,7 @@ public class Case03 {
 		//ログインボタンの押下
 		webDriver.findElement(By.xpath("//input[@value='ログイン']")).click();
 
-		//ページ遷移を待機する
+		//ページ遷移の待機
 		org.openqa.selenium.support.ui.WebDriverWait wait = new org.openqa.selenium.support.ui.WebDriverWait(webDriver,
 				java.time.Duration.ofSeconds(10));
 		wait.until(org.openqa.selenium.support.ui.ExpectedConditions.titleIs("コース詳細 | LMS"));

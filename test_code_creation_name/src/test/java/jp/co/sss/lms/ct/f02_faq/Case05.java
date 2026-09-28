@@ -184,7 +184,7 @@ public class Case05 {
 			e.printStackTrace();
 		}
 
-		//画面下部(検索結果周辺)エビデンスの取得
+		//画面下部(検索結果周辺)のエビデンスの取得
 		getEvidence(new Object() {
 		}, "2");
 	}
@@ -193,7 +193,25 @@ public class Case05 {
 	@Order(6)
 	@DisplayName("テスト06 「クリア」ボタン押下で入力したキーワードを消去")
 	void test06() {
-		// TODO ここに追加
-	}
+		org.openqa.selenium.support.ui.WebDriverWait wait = new org.openqa.selenium.support.ui.WebDriverWait(webDriver,
+				java.time.Duration.ofSeconds(10));
 
+		//キーワード入力欄を取得し、クリア後にキーワード「クリアテスト」を入力
+		var keywordInput = wait
+				.until(org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable(By.name("keyword")));
+		keywordInput.clear();
+		keywordInput.sendKeys("クリアテスト");
+
+		//「クリア」ボタンを押下
+		webDriver.findElement(By.xpath("//input[@value='クリア']")).click();
+
+		//キーワード入力欄の値を取得し、空文字になっていることを検証
+		String actuaValue = keywordInput.getAttribute("value");
+		assertEquals("", actuaValue, "クリアボタン押下後にキーワード入力欄が空になっていません");
+
+		//エビデンスの取得
+		getEvidence(new Object() {
+		});
+
+	}
 }

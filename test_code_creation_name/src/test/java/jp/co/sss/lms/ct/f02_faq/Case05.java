@@ -12,6 +12,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
 
+import lombok.experimental.var;
+
 /**
  * 結合テスト よくある質問機能
  * ケース05
@@ -57,7 +59,7 @@ public class Case05 {
 		loginIdInput.clear();
 		loginIdInput.sendKeys("StudentAA01");
 
-		//入力項目のクリアと各項目の入力(ログインID)
+		//入力項目のクリアと各項目の入力(パスワード)
 		var passwordInput = webDriver.findElement(By.name("password"));
 		passwordInput.clear();
 		passwordInput.sendKeys("Studenta01");
@@ -65,7 +67,7 @@ public class Case05 {
 		//ログインボタンの押下
 		webDriver.findElement(By.xpath("//input[@value='ログイン']")).click();
 
-		//ページ遷移を待機する
+		//ページ遷移の待機
 		org.openqa.selenium.support.ui.WebDriverWait wait = new org.openqa.selenium.support.ui.WebDriverWait(webDriver,
 				java.time.Duration.ofSeconds(10));
 		wait.until(org.openqa.selenium.support.ui.ExpectedConditions.titleIs("コース詳細 | LMS"));
@@ -93,7 +95,7 @@ public class Case05 {
 		wait.until(org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable(By.partialLinkText("ヘルプ")))
 				.click();
 
-		//ページ遷移を待機する
+		//ページ遷移の待機
 		wait.until(org.openqa.selenium.support.ui.ExpectedConditions.titleIs("ヘルプ | LMS"));
 
 		//画面遷移後のタイトルの確認
@@ -139,7 +141,52 @@ public class Case05 {
 	@Order(5)
 	@DisplayName("テスト05 キーワード検索で該当キーワードを含む検索結果だけ表示")
 	void test05() {
-		// TODO ここに追加
+		org.openqa.selenium.support.ui.WebDriverWait wait = new org.openqa.selenium.support.ui.WebDriverWait(webDriver,
+				java.time.Duration.ofSeconds(10));
+
+		//キーワード入力欄を取得し、クリア後にキーワード「研修」を入力
+		var keywordInput = wait
+				.until(org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable(By.name("keyword")));
+		keywordInput.clear();
+		keywordInput.sendKeys("研修");
+
+		//「検索」ボタンを押下
+		webDriver.findElement(By.xpath("//input[@value='検索']")).click();
+
+		//検索結果が表示されるまで待機
+		wait.until(
+				org.openqa.selenium.support.ui.ExpectedConditions
+						.presenceOfElementLocated(By.className("sorting_asc")));
+
+		//検索結果一覧の要素を取得し、1件以上存在することを確認
+		var searchResults = webDriver.findElements(By.xpath("//table//tbody/tr"));
+		assertTrue(searchResults.size() > 0, "検索結果が1件以上存在すること");
+
+		//Javascript実行用オブジェクトの準備
+		org.openqa.selenium.JavascriptExecutor js = (org.openqa.selenium.JavascriptExecutor) webDriver;
+
+		//画面上部(キーワード入力欄周辺)のエビデンスを取得
+		getEvidence(new Object() {
+		}, "1");
+
+		//検索結果を全件クリックし、回答部分を開く
+		var dts = webDriver.findElements(By.tagName("dt"));
+		for (var dt : dts) {
+			js.executeScript("arguments[0].click();", dt);
+		}
+
+		//画面を一番下までスクロールする
+		js.executeScript("window.scrollTo(0,document.body.scrollHeight);");
+
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		//画面下部(検索結果周辺)エビデンスの取得
+		getEvidence(new Object() {
+		}, "2");
 	}
 
 	@Test

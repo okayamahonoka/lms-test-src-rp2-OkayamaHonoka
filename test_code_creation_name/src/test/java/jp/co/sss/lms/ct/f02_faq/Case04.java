@@ -94,7 +94,7 @@ public class Case04 {
 		wait.until(org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable(By.partialLinkText("ヘルプ")))
 				.click();
 
-		//ページ遷移を待機する
+		//ページ遷移の待機
 		wait.until(org.openqa.selenium.support.ui.ExpectedConditions.titleIs("ヘルプ | LMS"));
 
 		//画面遷移後のタイトルの確認

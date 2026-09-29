@@ -154,9 +154,7 @@ public class Case05 {
 		webDriver.findElement(By.xpath("//input[@value='検索']")).click();
 
 		//検索結果が表示されるまで待機
-		wait.until(
-				org.openqa.selenium.support.ui.ExpectedConditions
-						.presenceOfElementLocated(By.className("sorting_asc")));
+		visibilityTimeout(By.className("sorting_asc"), 10);
 
 		//検索結果一覧の要素を取得し、1件以上存在することを確認
 		var searchResults = webDriver.findElements(By.xpath("//table//tbody/tr"));
@@ -176,7 +174,7 @@ public class Case05 {
 		}
 
 		//画面を一番下までスクロールする
-		js.executeScript("window.scrollTo(0,document.body.scrollHeight);");
+		scrollTo("document.body.scrollHeight");
 
 		try {
 			Thread.sleep(500);

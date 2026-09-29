@@ -149,18 +149,17 @@ public class Case06 {
 				.click();
 
 		//URLにカテゴリIDが含まれるまで待機
-		wait.until(
-				org.openqa.selenium.support.ui.ExpectedConditions.urlContains("frequentlyAskedQuestionCategoryId=1"));
+		visibilityTimeout(By.tagName("dt"), 10);
 
 		//該当カテゴリの質問が1件以上存在することを確認
 		var questions = webDriver.findElements(By.tagName("dt"));
 		assertTrue(questions.size() > 0, "該当カテゴリの質問が1件以上存在すること");
 
 		//Javascript実行用オブジェクトの準備
-		org.openqa.selenium.JavascriptExecutor js = (org.openqa.selenium.JavascriptExecutor) webDriver;
+		//org.openqa.selenium.JavascriptExecutor js = (org.openqa.selenium.JavascriptExecutor) webDriver;
 
 		//画面を一番下までスクロールする
-		js.executeScript("window.scrollTo(0,document.body.scrollHeight);");
+		scrollTo("document.body.scrollHeight");
 
 		try {
 			Thread.sleep(500);
@@ -199,7 +198,7 @@ public class Case06 {
 		}
 
 		//画面を一番下までスクロールする
-		js.executeScript("window.scrollTo(0,document.body.scrollHeight);");
+		scrollTo("document.body.scrollHeight");
 
 		//エビデンスの取得
 		getEvidence(new Object() {
